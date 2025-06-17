@@ -3,7 +3,7 @@ import { useState } from "react";
 import RatingStars from "./RatingStars";
 import { Ticket, Users, DollarSign } from "lucide-react";
 
-const TICKET_PLATFORMS = ["All", "Eventbrite", "Ticketmaster", "Dice", "Resident Advisor"];
+const TICKET_PLATFORMS = ["All", "Eventbrite", "Partiful", "Dice", "Posh"];
 
 const EVENTS = [
   {
@@ -18,7 +18,7 @@ const EVENTS = [
   {
     id: 2,
     name: "Rooftop Vibes",
-    platform: "Ticketmaster",
+    platform: "Partiful",
     crowd: 90,
     capacity: 100,
     enjoyment: 3.8,
@@ -36,7 +36,7 @@ const EVENTS = [
   {
     id: 4,
     name: "Camp Fire Chill",
-    platform: "Resident Advisor",
+    platform: "Posh",
     crowd: 70,
     capacity: 120,
     enjoyment: 4.1,
