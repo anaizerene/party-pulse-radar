@@ -18,13 +18,19 @@ const Index = () => {
               Compare ticketed events by live crowd, guest enjoyment, and cost. Curators, manage your events & rankings.
             </p>
           </div>
-          <div>
+          <div className="flex items-center gap-4">
             <button
               onClick={() => setCuratorMode((v) => !v)}
               className="px-5 py-2 text-base rounded-lg font-semibold transition-colors shadow border bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {curatorMode ? "Compare Events" : "Organizer Panel"}
             </button>
+            <a
+              href="/venue-events"
+              className="px-5 py-2 text-base rounded-lg font-semibold transition-colors shadow border bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            >
+              Venue Events
+            </a>
           </div>
         </header>
         <main className="grid grid-cols-1 lg:grid-cols-12 gap-8">
