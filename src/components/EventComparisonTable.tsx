@@ -2,55 +2,25 @@
 import { useState } from "react";
 import RatingStars from "./RatingStars";
 import { Ticket, Users, DollarSign } from "lucide-react";
+import { VENUES } from "../data/venues";
 
 const TICKET_PLATFORMS = ["All", "Eventbrite", "Partiful", "Dice", "Posh"];
-
-const EVENTS = [
-  {
-    id: 1,
-    name: "Sunset Groove Festival",
-    platform: "Eventbrite",
-    crowd: 230,
-    capacity: 300,
-    enjoyment: 4.5,
-    price: 55,
-  },
-  {
-    id: 2,
-    name: "Rooftop Vibes",
-    platform: "Partiful",
-    crowd: 90,
-    capacity: 100,
-    enjoyment: 3.8,
-    price: 28,
-  },
-  {
-    id: 3,
-    name: "Secret Disco",
-    platform: "Dice",
-    crowd: 220,
-    capacity: 220,
-    enjoyment: 4.9,
-    price: 70,
-  },
-  {
-    id: 4,
-    name: "Camp Fire Chill",
-    platform: "Posh",
-    crowd: 70,
-    capacity: 120,
-    enjoyment: 4.1,
-    price: 24,
-  },
-];
 
 const getCostRatio = (price: number, enjoyment: number) => (enjoyment > 0 ? (price / enjoyment).toFixed(1) : "N/A");
 
 const EventComparisonTable = () => {
   const [platformFilter, setPlatformFilter] = useState("All");
+  const [venueFilter, setVenueFilter] = useState("All");
   const [sortKey, setSortKey] = useState<"enjoyment" | "cost" | "crowd" | "ratio">("enjoyment");
 
-  const filtered = EVENTS.filter(ev => platformFilter === "All" || ev.platform === platformFilter);
+  // Flatten all events from all venues
+  const allEvents = VENUES.flatMap(venue => venue.events);
+  
+  const filtered = allEvents.filter(ev => {
+    const platformMatch = platformFilter === "All" || ev.platform === platformFilter;
+    const venueMatch = venueFilter === "All" || VENUES.find(v => v.events.includes(ev))?.name === venueFilter;
+    return platformMatch && venueMatch;
+  });
 
   const sorted = [...filtered].sort((a, b) => {
     if (sortKey === "crowd") return b.crowd - a.crowd;
@@ -63,17 +33,32 @@ const EventComparisonTable = () => {
   return (
     <div className="w-full bg-card rounded-xl shadow-lg border border-border p-6 overflow-x-auto animate-fade-in">
       <div className="mb-4 flex flex-wrap gap-4 items-end justify-between">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          Show:{" "}
-          <select
-            value={platformFilter}
-            className="bg-muted border border-border rounded px-3 py-1 ml-2"
-            onChange={e => setPlatformFilter(e.target.value)}
-          >
-            {TICKET_PLATFORMS.map(name => (
-              <option key={name}>{name}</option>
-            ))}
-          </select>
+        <div className="flex items-center gap-4 text-muted-foreground">
+          <div className="flex items-center gap-2">
+            Venue:{" "}
+            <select
+              value={venueFilter}
+              className="bg-muted border border-border rounded px-3 py-1 ml-2"
+              onChange={e => setVenueFilter(e.target.value)}
+            >
+              <option value="All">All</option>
+              {VENUES.map(venue => (
+                <option key={venue.id} value={venue.name}>{venue.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center gap-2">
+            Platform:{" "}
+            <select
+              value={platformFilter}
+              className="bg-muted border border-border rounded px-3 py-1 ml-2"
+              onChange={e => setPlatformFilter(e.target.value)}
+            >
+              {TICKET_PLATFORMS.map(name => (
+                <option key={name}>{name}</option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="flex gap-2">
           <button
