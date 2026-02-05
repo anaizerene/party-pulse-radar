@@ -35,7 +35,7 @@ const VenueEvents = () => {
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Dashboard
+            Back to Discover
           </Link>
           
           <div className="bg-card rounded-xl shadow-lg border border-border p-6">

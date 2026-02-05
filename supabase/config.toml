@@ -1,1 +1,7 @@
 project_id = "qlykwzuypufjltffvucw"
+
+[functions.scrape-events]
+verify_jwt = false
+
+[functions.categorize-events]
+verify_jwt = false

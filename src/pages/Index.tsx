@@ -19,6 +19,12 @@ const Index = () => {
             </p>
           </div>
           <div className="flex items-center gap-4">
+            <a
+              href="/"
+              className="px-5 py-2 text-base rounded-lg font-semibold transition-colors shadow border bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            >
+              ← Discover
+            </a>
             <button
               onClick={() => setCuratorMode((v) => !v)}
               className="px-5 py-2 text-base rounded-lg font-semibold transition-colors shadow border bg-primary text-primary-foreground hover:bg-primary/90"
