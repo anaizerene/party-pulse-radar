@@ -103,6 +103,9 @@ const Discover = () => {
               <Button onClick={() => navigate('/map')} variant="secondary" className="gap-2">
                 <Map className="w-4 h-4" /> Map View
               </Button>
+              <Button onClick={() => navigate('/add-venue')} className="gap-2">
+                + Add Venue
+              </Button>
               <Button onClick={() => navigate('/compare')} variant="secondary" className="gap-2">
                 Compare Events <ArrowRight className="w-4 h-4" />
               </Button>

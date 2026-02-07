@@ -14,7 +14,95 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          capacity: number
+          created_at: string
+          crowd: number
+          date: string
+          description: string | null
+          enjoyment: number
+          id: string
+          name: string
+          platform: string
+          price: number
+          time: string
+          user_id: string
+          venue_id: string
+        }
+        Insert: {
+          capacity?: number
+          created_at?: string
+          crowd?: number
+          date: string
+          description?: string | null
+          enjoyment?: number
+          id?: string
+          name: string
+          platform?: string
+          price?: number
+          time: string
+          user_id: string
+          venue_id: string
+        }
+        Update: {
+          capacity?: number
+          created_at?: string
+          crowd?: number
+          date?: string
+          description?: string | null
+          enjoyment?: number
+          id?: string
+          name?: string
+          platform?: string
+          price?: number
+          time?: string
+          user_id?: string
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      venues: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          lat: number | null
+          lng: number | null
+          location: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          location: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          location?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
