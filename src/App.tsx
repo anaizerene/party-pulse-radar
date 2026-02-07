@@ -7,6 +7,7 @@ import Discover from "./pages/Discover";
 import Index from "./pages/Index";
 import VenueEvents from "./pages/VenueEvents";
 import NotFound from "./pages/NotFound";
+import EventMap from "./pages/EventMap";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Discover />} />
           <Route path="/compare" element={<Index />} />
           <Route path="/venue-events" element={<VenueEvents />} />
+          <Route path="/map" element={<EventMap />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

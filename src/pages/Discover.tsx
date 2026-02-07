@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowRight, Calendar, MapPin, Users, Star, Ticket, RefreshCw } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Star, Ticket, RefreshCw, Map } from "lucide-react";
 import { toast } from "sonner";
 import { EVENT_CATEGORIES, getAllStaticEvents, categorizeEventsLocally, fetchAndCategorizeEvents, type Event, type CategorizedEvents } from "@/lib/api/events";
 import RatingStars from "@/components/RatingStars";
@@ -100,7 +100,10 @@ const Discover = () => {
                 <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
                 {isRefreshing ? 'Refreshing...' : 'Refresh Live Data'}
               </Button>
-              <Button onClick={() => navigate('/')} variant="secondary" className="gap-2">
+              <Button onClick={() => navigate('/map')} variant="secondary" className="gap-2">
+                <Map className="w-4 h-4" /> Map View
+              </Button>
+              <Button onClick={() => navigate('/compare')} variant="secondary" className="gap-2">
                 Compare Events <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
