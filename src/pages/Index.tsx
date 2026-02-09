@@ -7,35 +7,35 @@ const Index = () => {
   const [curatorMode, setCuratorMode] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary to-background/90 flex flex-col items-center justify-start py-10 w-full">
-      <div className="w-full max-w-7xl px-8">
-        <header className="flex justify-between items-center mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary to-background/90 flex flex-col items-center justify-start py-4 sm:py-10 w-full">
+      <div className="w-full max-w-7xl px-4 sm:px-8">
+        <header className="flex flex-col gap-3 mb-4 sm:mb-6">
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tight mb-1">
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-1">
               Event Compare & Analytics
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Compare ticketed events by live crowd, guest enjoyment, and cost. Curators, manage your events & rankings.
+            <p className="text-sm sm:text-lg text-muted-foreground">
+              Compare ticketed events by live crowd, guest enjoyment, and cost.
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
             <a
               href="/"
-              className="px-5 py-2 text-base rounded-lg font-semibold transition-colors shadow border bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              className="px-3 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-base rounded-lg font-semibold transition-colors shadow border bg-secondary text-secondary-foreground hover:bg-secondary/80"
             >
               ← Discover
             </a>
             <button
               onClick={() => setCuratorMode((v) => !v)}
-              className="px-5 py-2 text-base rounded-lg font-semibold transition-colors shadow border bg-primary text-primary-foreground hover:bg-primary/90"
+              className="px-3 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-base rounded-lg font-semibold transition-colors shadow border bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              {curatorMode ? "Compare Events" : "Organizer Panel"}
+              {curatorMode ? "Compare" : "Organizer"}
             </button>
             <a
               href="/venue-events"
-              className="px-5 py-2 text-base rounded-lg font-semibold transition-colors shadow border bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              className="px-3 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-base rounded-lg font-semibold transition-colors shadow border bg-secondary text-secondary-foreground hover:bg-secondary/80"
             >
-              Venue Events
+              Venues
             </a>
           </div>
         </header>

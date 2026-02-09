@@ -80,34 +80,35 @@ const Discover = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+          <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-1 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
                 Discover Events
               </h1>
-              <p className="text-lg text-muted-foreground max-w-xl">
+              <p className="text-sm sm:text-lg text-muted-foreground max-w-xl">
                 Find your vibe. Events curated by category from DICE, Eventbrite, Partiful & more.
               </p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               <Button 
                 variant="outline" 
+                size="sm"
                 onClick={() => loadEvents(true)}
                 disabled={isRefreshing}
-                className="gap-2"
+                className="gap-1.5 text-xs sm:text-sm"
               >
-                <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-                {isRefreshing ? 'Refreshing...' : 'Refresh Live Data'}
+                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? 'Refreshing...' : 'Refresh'}
               </Button>
-              <Button onClick={() => navigate('/map')} variant="secondary" className="gap-2">
-                <Map className="w-4 h-4" /> Map View
+              <Button onClick={() => navigate('/map')} variant="secondary" size="sm" className="gap-1.5 text-xs sm:text-sm">
+                <Map className="w-3.5 h-3.5" /> Map
               </Button>
-              <Button onClick={() => navigate('/add-venue')} className="gap-2">
-                + Add Venue
+              <Button onClick={() => navigate('/add-venue')} size="sm" className="gap-1.5 text-xs sm:text-sm">
+                + Venue
               </Button>
-              <Button onClick={() => navigate('/compare')} variant="secondary" className="gap-2">
-                Compare Events <ArrowRight className="w-4 h-4" />
+              <Button onClick={() => navigate('/compare')} variant="secondary" size="sm" className="gap-1.5 text-xs sm:text-sm">
+                Compare <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </div>
           </div>
@@ -115,9 +116,9 @@ const Discover = () => {
       </header>
 
       {/* Category Tabs */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full">
-          <TabsList className="flex flex-wrap gap-2 h-auto bg-transparent justify-start mb-8">
+          <TabsList className="flex flex-wrap gap-1.5 sm:gap-2 h-auto bg-transparent justify-start mb-4 sm:mb-8">
             {EVENT_CATEGORIES.map((category) => (
               <TabsTrigger
                 key={category.id}
@@ -145,7 +146,7 @@ const Discover = () => {
               </div>
 
               {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                   {[...Array(6)].map((_, i) => (
                     <Card key={i} className="overflow-hidden">
                       <CardHeader>
@@ -172,7 +173,7 @@ const Discover = () => {
                   </Button>
                 </Card>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                   {getCategoryEvents(category.id).map((event) => (
                     <EventCard key={event.id} event={event} />
                   ))}
