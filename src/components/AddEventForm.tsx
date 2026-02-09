@@ -13,7 +13,7 @@ interface AddEventFormProps {
   userId: string;
 }
 
-const PLATFORMS = ["Eventbrite", "Dice", "Partiful", "Posh", "Other"];
+const PLATFORMS = ["Eventbrite", "Dice", "Partiful", "Posh", "Shotgun", "Other"];
 
 const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
   const [name, setName] = useState("");

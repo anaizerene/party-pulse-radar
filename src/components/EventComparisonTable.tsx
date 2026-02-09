@@ -2,23 +2,23 @@
 import { useState } from "react";
 import RatingStars from "./RatingStars";
 import { Ticket, Users, DollarSign } from "lucide-react";
-import { VENUES } from "../data/venues";
+import { useVenues } from "@/hooks/useVenues";
 
 const TICKET_PLATFORMS = ["All", "Eventbrite", "Partiful", "Dice", "Posh"];
 
 const getCostRatio = (price: number, enjoyment: number) => (enjoyment > 0 ? (price / enjoyment).toFixed(1) : "N/A");
 
 const EventComparisonTable = () => {
+  const { venues, allEvents: flatEvents } = useVenues();
   const [platformFilter, setPlatformFilter] = useState("All");
   const [venueFilter, setVenueFilter] = useState("All");
   const [sortKey, setSortKey] = useState<"enjoyment" | "cost" | "crowd" | "ratio">("enjoyment");
 
-  // Flatten all events from all venues
-  const allEvents = VENUES.flatMap(venue => venue.events);
+  const allEvents = flatEvents;
   
   const filtered = allEvents.filter(ev => {
     const platformMatch = platformFilter === "All" || ev.platform === platformFilter;
-    const venueMatch = venueFilter === "All" || VENUES.find(v => v.events.includes(ev))?.name === venueFilter;
+    const venueMatch = venueFilter === "All" || ev.venue === venueFilter;
     return platformMatch && venueMatch;
   });
 
@@ -42,8 +42,8 @@ const EventComparisonTable = () => {
               onChange={e => setVenueFilter(e.target.value)}
             >
               <option value="All">All</option>
-              {VENUES.map(venue => (
-                <option key={venue.id} value={venue.name}>{venue.name}</option>
+              {venues.map(venue => (
+                <option key={String(venue.id)} value={venue.name}>{venue.name}</option>
               ))}
             </select>
           </div>
