@@ -1,13 +1,25 @@
 import { useState } from "react";
 import { MapPin, Clock, Calendar, DollarSign, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { VENUES } from "../data/venues";
+import { useVenues } from "@/hooks/useVenues";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const VenueEvents = () => {
+  const { venues, isLoading } = useVenues();
   const [sortBy, setSortBy] = useState<"date" | "price">("date");
-  const [selectedVenueId, setSelectedVenueId] = useState<number>(1);
+  const [selectedVenueId, setSelectedVenueId] = useState<number | string | null>(null);
 
-  const selectedVenue = VENUES.find(v => v.id === selectedVenueId) || VENUES[0];
+  const selectedVenue = selectedVenueId != null
+    ? venues.find(v => v.id === selectedVenueId) || venues[0]
+    : venues[0];
+
+  if (isLoading || !selectedVenue) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Skeleton className="h-8 w-48" />
+      </div>
+    );
+  }
   
   const sortedEvents = [...selectedVenue.events].sort((a, b) => {
     if (sortBy === "date") {
@@ -63,13 +75,13 @@ const VenueEvents = () => {
           <div className="flex flex-col md:flex-row md:items-center gap-4">
             <div className="flex items-center gap-4">
               <span className="text-muted-foreground">Venue:</span>
-              <div className="flex gap-2">
-                {VENUES.map((venue) => (
+            <div className="flex flex-wrap gap-2">
+                {venues.map((venue) => (
                   <button
-                    key={venue.id}
+                    key={String(venue.id)}
                     onClick={() => setSelectedVenueId(venue.id)}
                     className={`px-3 py-1 rounded border transition-colors ${
-                      selectedVenueId === venue.id 
+                      selectedVenue?.id === venue.id 
                         ? "bg-primary text-primary-foreground" 
                         : "bg-muted hover:bg-muted/80"
                     }`}

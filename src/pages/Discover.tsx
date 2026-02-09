@@ -7,62 +7,49 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Calendar, MapPin, Users, Star, Ticket, RefreshCw, Map } from "lucide-react";
 import { toast } from "sonner";
-import { EVENT_CATEGORIES, getAllStaticEvents, categorizeEventsLocally, fetchAndCategorizeEvents, type Event, type CategorizedEvents } from "@/lib/api/events";
+import { EVENT_CATEGORIES, categorizeEventsLocally, fetchAndCategorizeEvents, type Event, type CategorizedEvents } from "@/lib/api/events";
+import { useVenues } from "@/hooks/useVenues";
 import RatingStars from "@/components/RatingStars";
 
 const Discover = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<string>('popular');
   const [categorizedEvents, setCategorizedEvents] = useState<CategorizedEvents>({});
-  const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const { allEvents, isLoading } = useVenues();
 
-  // Load and categorize events on mount
+  // Categorize whenever allEvents changes
   useEffect(() => {
-    loadEvents();
-  }, []);
+    if (allEvents.length > 0) {
+      const categories = categorizeEventsLocally(allEvents as Event[]);
+      setCategorizedEvents(categories);
+    }
+  }, [allEvents]);
 
   const loadEvents = async (refresh = false) => {
-    if (refresh) {
-      setIsRefreshing(true);
-    } else {
-      setIsLoading(true);
-    }
-
+    setIsRefreshing(true);
     try {
-      // Start with local categorization for instant display
-      const staticEvents = getAllStaticEvents();
-      const localCategories = categorizeEventsLocally(staticEvents);
-      setCategorizedEvents(localCategories);
-      setIsLoading(false);
-
-      // Then try to fetch fresh data from platforms
-      if (refresh) {
-        const { categorizedEvents: freshCategories, error } = await fetchAndCategorizeEvents();
-        if (!error && Object.keys(freshCategories).length > 0) {
-          // Merge with local categories
-          const merged = { ...localCategories };
-          Object.entries(freshCategories).forEach(([cat, events]) => {
-            if (merged[cat]) {
-              // Add new events that aren't already there
-              const existingIds = new Set(merged[cat].map(e => e.id));
-              const newEvents = (events as Event[]).filter(e => !existingIds.has(e.id));
-              merged[cat] = [...merged[cat], ...newEvents];
-            } else {
-              merged[cat] = events as Event[];
-            }
-          });
-          setCategorizedEvents(merged);
-          toast.success('Events refreshed from live platforms!');
-        } else if (error) {
-          toast.error('Could not fetch live data, showing cached events');
-        }
+      const { categorizedEvents: freshCategories, error } = await fetchAndCategorizeEvents();
+      if (!error && Object.keys(freshCategories).length > 0) {
+        const merged = { ...categorizedEvents };
+        Object.entries(freshCategories).forEach(([cat, events]) => {
+          if (merged[cat]) {
+            const existingIds = new Set(merged[cat].map(e => e.id));
+            const newEvents = (events as Event[]).filter(e => !existingIds.has(e.id));
+            merged[cat] = [...merged[cat], ...newEvents];
+          } else {
+            merged[cat] = events as Event[];
+          }
+        });
+        setCategorizedEvents(merged);
+        toast.success('Events refreshed from live platforms!');
+      } else if (error) {
+        toast.error('Could not fetch live data, showing cached events');
       }
     } catch (error) {
       console.error('Error loading events:', error);
       toast.error('Error loading events');
     } finally {
-      setIsLoading(false);
       setIsRefreshing(false);
     }
   };
