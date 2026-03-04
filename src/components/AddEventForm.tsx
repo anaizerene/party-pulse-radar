@@ -23,6 +23,7 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
   const [description, setDescription] = useState("");
   const [platform, setPlatform] = useState("Other");
   const [capacity, setCapacity] = useState("0");
+  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [addedCount, setAddedCount] = useState(0);
 
