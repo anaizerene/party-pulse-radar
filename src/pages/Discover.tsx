@@ -246,6 +246,11 @@ const EventCard = ({ event }: { event: Event }) => {
             <Ticket className="w-4 h-4" />
             {event.price === 0 ? 'Free' : `$${event.price}`}
           </div>
+          {event.url && (
+            <Badge variant="secondary" className="text-xs">
+              View on {event.platform}
+            </Badge>
+          )}
         </div>
       </CardContent>
     </Card>

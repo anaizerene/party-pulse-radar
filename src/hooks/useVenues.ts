@@ -91,6 +91,7 @@ export function useVenues() {
             crowd: e.crowd,
             capacity: e.capacity,
             enjoyment: Number(e.enjoyment),
+            url: (e as any).url || undefined,
           })),
       }));
 

@@ -116,6 +116,10 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
             </Select>
           </div>
           <div className="space-y-2">
+            <Label htmlFor="event-url">Ticket / Event URL</Label>
+            <Input id="event-url" type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://dice.fm/event/..." />
+          </div>
+          <div className="space-y-2">
             <Label htmlFor="event-desc">Description</Label>
             <Textarea id="event-desc" value={description} onChange={(e) => setDescription(e.target.value)} maxLength={500} placeholder="What's the event about?" />
           </div>
