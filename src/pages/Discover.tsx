@@ -114,9 +114,6 @@ const Discover = () => {
               <Button onClick={() => navigate('/add-venue')} size="sm" className="gap-1.5 text-xs sm:text-sm">
                 + Venue
               </Button>
-              <Button onClick={() => navigate('/compare')} variant="secondary" size="sm" className="gap-1.5 text-xs sm:text-sm">
-                Compare <ArrowRight className="w-3.5 h-3.5" />
-              </Button>
             </div>
           </div>
         </div>
