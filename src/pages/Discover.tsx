@@ -141,12 +141,42 @@ const Discover = () => {
           {/* Category Content */}
           {EVENT_CATEGORIES.map((category) => (
             <TabsContent key={category.id} value={category.id} className="mt-0">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <span>{category.icon}</span>
-                  {category.name}
-                </h2>
-                <p className="text-muted-foreground">{category.description}</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <span>{category.icon}</span>
+                    {category.name}
+                  </h2>
+                  <p className="text-muted-foreground">{category.description}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <SlidersHorizontal className="w-4 h-4 text-muted-foreground shrink-0" />
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-[130px] h-8 text-xs">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="date">Date</SelectItem>
+                      <SelectItem value="price-low">Price: Low</SelectItem>
+                      <SelectItem value="price-high">Price: High</SelectItem>
+                      <SelectItem value="crowd">Most Popular</SelectItem>
+                      <SelectItem value="rating">Top Rated</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={filterPlatform} onValueChange={setFilterPlatform}>
+                    <SelectTrigger className="w-[120px] h-8 text-xs">
+                      <SelectValue placeholder="Platform" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Platforms</SelectItem>
+                      <SelectItem value="dice">DICE</SelectItem>
+                      <SelectItem value="eventbrite">Eventbrite</SelectItem>
+                      <SelectItem value="partiful">Partiful</SelectItem>
+                      <SelectItem value="posh">Posh</SelectItem>
+                      <SelectItem value="shotgun">Shotgun</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {isLoading ? (
