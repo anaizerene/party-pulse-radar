@@ -222,9 +222,6 @@ const Discover = () => {
       <footer className="border-t border-border bg-muted/30 mt-12">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button variant="ghost" onClick={() => navigate('/')}>
-              Compare Events
-            </Button>
             <Button variant="ghost" onClick={() => navigate('/venue-events')}>
               Venue Events
             </Button>
