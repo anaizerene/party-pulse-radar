@@ -13,6 +13,7 @@ export type VenueEvent = {
   crowd: number;
   capacity: number;
   enjoyment: number;
+  url?: string;
 };
 
 export type Venue = {
