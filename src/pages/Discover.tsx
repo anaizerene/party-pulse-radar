@@ -60,7 +60,24 @@ const Discover = () => {
   const getCategoryEvents = (categoryId: string): Event[] => {
     const category = EVENT_CATEGORIES.find(c => c.id === categoryId);
     if (!category) return [];
-    return categorizedEvents[category.name] || [];
+    let events = categorizedEvents[category.name] || [];
+
+    // Filter by platform
+    if (filterPlatform !== "all") {
+      events = events.filter(e => e.platform.toLowerCase() === filterPlatform.toLowerCase());
+    }
+
+    // Sort
+    return [...events].sort((a, b) => {
+      switch (sortBy) {
+        case "price-low": return a.price - b.price;
+        case "price-high": return b.price - a.price;
+        case "crowd": return b.crowd - a.crowd;
+        case "rating": return b.enjoyment - a.enjoyment;
+        case "date":
+        default: return new Date(a.date).getTime() - new Date(b.date).getTime();
+      }
+    });
   };
 
   const currentEvents = getCategoryEvents(activeCategory);
