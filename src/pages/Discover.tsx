@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowRight, Calendar, MapPin, Users, Star, Ticket, RefreshCw, Map } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Star, Ticket, RefreshCw, Map, SlidersHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { EVENT_CATEGORIES, categorizeEventsLocally, fetchAndCategorizeEvents, type Event, type CategorizedEvents } from "@/lib/api/events";
 import { useVenues } from "@/hooks/useVenues";
@@ -16,6 +17,8 @@ const Discover = () => {
   const [activeCategory, setActiveCategory] = useState<string>('popular');
   const [categorizedEvents, setCategorizedEvents] = useState<CategorizedEvents>({});
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [sortBy, setSortBy] = useState<string>("date");
+  const [filterPlatform, setFilterPlatform] = useState<string>("all");
   const { allEvents, isLoading } = useVenues();
 
   // Categorize whenever allEvents changes
@@ -57,7 +60,24 @@ const Discover = () => {
   const getCategoryEvents = (categoryId: string): Event[] => {
     const category = EVENT_CATEGORIES.find(c => c.id === categoryId);
     if (!category) return [];
-    return categorizedEvents[category.name] || [];
+    let events = categorizedEvents[category.name] || [];
+
+    // Filter by platform
+    if (filterPlatform !== "all") {
+      events = events.filter(e => e.platform.toLowerCase() === filterPlatform.toLowerCase());
+    }
+
+    // Sort
+    return [...events].sort((a, b) => {
+      switch (sortBy) {
+        case "price-low": return a.price - b.price;
+        case "price-high": return b.price - a.price;
+        case "crowd": return b.crowd - a.crowd;
+        case "rating": return b.enjoyment - a.enjoyment;
+        case "date":
+        default: return new Date(a.date).getTime() - new Date(b.date).getTime();
+      }
+    });
   };
 
   const currentEvents = getCategoryEvents(activeCategory);
@@ -94,9 +114,6 @@ const Discover = () => {
               <Button onClick={() => navigate('/add-venue')} size="sm" className="gap-1.5 text-xs sm:text-sm">
                 + Venue
               </Button>
-              <Button onClick={() => navigate('/compare')} variant="secondary" size="sm" className="gap-1.5 text-xs sm:text-sm">
-                Compare <ArrowRight className="w-3.5 h-3.5" />
-              </Button>
             </div>
           </div>
         </div>
@@ -124,12 +141,42 @@ const Discover = () => {
           {/* Category Content */}
           {EVENT_CATEGORIES.map((category) => (
             <TabsContent key={category.id} value={category.id} className="mt-0">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <span>{category.icon}</span>
-                  {category.name}
-                </h2>
-                <p className="text-muted-foreground">{category.description}</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <span>{category.icon}</span>
+                    {category.name}
+                  </h2>
+                  <p className="text-muted-foreground">{category.description}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <SlidersHorizontal className="w-4 h-4 text-muted-foreground shrink-0" />
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-[130px] h-8 text-xs">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="date">Date</SelectItem>
+                      <SelectItem value="price-low">Price: Low</SelectItem>
+                      <SelectItem value="price-high">Price: High</SelectItem>
+                      <SelectItem value="crowd">Most Popular</SelectItem>
+                      <SelectItem value="rating">Top Rated</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={filterPlatform} onValueChange={setFilterPlatform}>
+                    <SelectTrigger className="w-[120px] h-8 text-xs">
+                      <SelectValue placeholder="Platform" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Platforms</SelectItem>
+                      <SelectItem value="dice">DICE</SelectItem>
+                      <SelectItem value="eventbrite">Eventbrite</SelectItem>
+                      <SelectItem value="partiful">Partiful</SelectItem>
+                      <SelectItem value="posh">Posh</SelectItem>
+                      <SelectItem value="shotgun">Shotgun</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {isLoading ? (
@@ -175,9 +222,6 @@ const Discover = () => {
       <footer className="border-t border-border bg-muted/30 mt-12">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button variant="ghost" onClick={() => navigate('/')}>
-              Compare Events
-            </Button>
             <Button variant="ghost" onClick={() => navigate('/venue-events')}>
               Venue Events
             </Button>
