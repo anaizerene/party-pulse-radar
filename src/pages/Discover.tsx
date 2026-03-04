@@ -17,6 +17,8 @@ const Discover = () => {
   const [activeCategory, setActiveCategory] = useState<string>('popular');
   const [categorizedEvents, setCategorizedEvents] = useState<CategorizedEvents>({});
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [sortBy, setSortBy] = useState<string>("date");
+  const [filterPlatform, setFilterPlatform] = useState<string>("all");
   const { allEvents, isLoading } = useVenues();
 
   // Categorize whenever allEvents changes
