@@ -46,7 +46,8 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
       crowd: 0,
       capacity: parseInt(capacity) || 0,
       enjoyment: 0,
-    });
+      url: url.trim() || null,
+    } as any);
 
     if (error) {
       toast.error(error.message);
