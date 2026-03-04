@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowRight, Calendar, MapPin, Users, Star, Ticket, RefreshCw, Map } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Star, Ticket, RefreshCw, Map, SlidersHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { EVENT_CATEGORIES, categorizeEventsLocally, fetchAndCategorizeEvents, type Event, type CategorizedEvents } from "@/lib/api/events";
 import { useVenues } from "@/hooks/useVenues";
