@@ -27,6 +27,7 @@ export type Database = {
           platform: string
           price: number
           time: string
+          url: string | null
           user_id: string
           venue_id: string
         }
@@ -42,6 +43,7 @@ export type Database = {
           platform?: string
           price?: number
           time: string
+          url?: string | null
           user_id: string
           venue_id: string
         }
@@ -57,6 +59,7 @@ export type Database = {
           platform?: string
           price?: number
           time?: string
+          url?: string | null
           user_id?: string
           venue_id?: string
         }

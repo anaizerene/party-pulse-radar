@@ -14,6 +14,7 @@ export type Event = {
   enjoyment: number;
   venue?: string;
   category?: string[];
+  url?: string;
 };
 
 export type CategorizedEvents = {

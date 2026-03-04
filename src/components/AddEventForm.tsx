@@ -23,6 +23,7 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
   const [description, setDescription] = useState("");
   const [platform, setPlatform] = useState("Other");
   const [capacity, setCapacity] = useState("0");
+  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [addedCount, setAddedCount] = useState(0);
 
@@ -45,7 +46,8 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
       crowd: 0,
       capacity: parseInt(capacity) || 0,
       enjoyment: 0,
-    });
+      url: url.trim() || null,
+    } as any);
 
     if (error) {
       toast.error(error.message);
@@ -59,6 +61,7 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
       setDescription("");
       setPlatform("Other");
       setCapacity("0");
+      setUrl("");
     }
     setLoading(false);
   };
@@ -111,6 +114,10 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
                 ))}
               </SelectContent>
             </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="event-url">Ticket / Event URL</Label>
+            <Input id="event-url" type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://dice.fm/event/..." />
           </div>
           <div className="space-y-2">
             <Label htmlFor="event-desc">Description</Label>

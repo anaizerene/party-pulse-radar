@@ -154,8 +154,15 @@ const VenueEvents = () => {
                 </div>
               </div>
               
-              <button className="w-full mt-4 bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors">
-                Get Tickets
+              <button 
+                className="w-full mt-4 bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                onClick={() => {
+                  if ((event as any).url) {
+                    window.open((event as any).url, '_blank', 'noopener,noreferrer');
+                  }
+                }}
+              >
+                {(event as any).url ? 'Get Tickets' : 'No Link Available'}
               </button>
             </div>
           ))}

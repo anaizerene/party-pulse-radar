@@ -192,8 +192,17 @@ const Discover = () => {
 const EventCard = ({ event }: { event: Event }) => {
   const crowdPercentage = event.capacity ? Math.round((event.crowd / event.capacity) * 100) : 0;
 
+  const handleClick = () => {
+    if (event.url) {
+      window.open(event.url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1 group">
+    <Card 
+      className={`overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1 group ${event.url ? 'cursor-pointer' : ''}`}
+      onClick={handleClick}
+    >
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start gap-2">
           <div>
@@ -237,6 +246,11 @@ const EventCard = ({ event }: { event: Event }) => {
             <Ticket className="w-4 h-4" />
             {event.price === 0 ? 'Free' : `$${event.price}`}
           </div>
+          {event.url && (
+            <Badge variant="secondary" className="text-xs">
+              View on {event.platform}
+            </Badge>
+          )}
         </div>
       </CardContent>
     </Card>
