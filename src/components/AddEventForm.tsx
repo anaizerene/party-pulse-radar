@@ -61,6 +61,7 @@ const AddEventForm = ({ venueId, userId }: AddEventFormProps) => {
       setDescription("");
       setPlatform("Other");
       setCapacity("0");
+      setUrl("");
     }
     setLoading(false);
   };
